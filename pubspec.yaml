@@ -1,0 +1,33 @@
+name: amp
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.6.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  geocoding: ^2.0.0
+  geolocator: ^9.0.1
+  http: 1.3.0
+  intl: 0.20.2
+  provider: ^6.1.2
+  weather_icons: ^3.0.0
+
+dev_dependencies:
+  flutter_lints: ^5.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - "assets/data/datos_municipios.json"
+    - "assets/data/pronosticos.json"
+    - "assets/data/dia1.json"
+    - "assets/data/dia2.json"
+    - "assets/data/dia3.json"
+    - "assets/data/dia4.json"

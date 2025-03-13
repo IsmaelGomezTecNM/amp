@@ -1,0 +1,50 @@
+[
+  {
+    "nes": "San Luis Potosí",
+    "nmun": "Ciudad Valles",
+    "tmax": "18.8",
+    "tmin": "10.2",
+    "desciel": "Cielo nublado",
+    "probprec": "0",
+    "prec": "4.6",
+    "velvien": "3.9",
+    "dirvienc": "Noroeste",
+    "raf": "10.4"
+  },
+  {
+    "nes": "San Luis Potosí",
+    "nmun": "Ciudad Valles",
+    "tmax": "25.9",
+    "tmin": "12.0",
+    "desciel": "Medio nublado",
+    "probprec": "0",
+    "prec": "0.4",
+    "velvien": "6.3",
+    "dirvienc": "Este",
+    "raf": "16.9"
+  },
+  {
+    "nes": "San Luis Potosí",
+    "nmun": "Ciudad Valles",
+    "tmax": "28.8",
+    "tmin": "15.1",
+    "desciel": "Medio nublado",
+    "probprec": "0",
+    "prec": "0.1",
+    "velvien": "7.5",
+    "dirvienc": "Sureste",
+    "raf": "22.0"
+  },
+  {
+    "nes": "San Luis Potosí",
+    "nmun": "Ciudad Valles",
+    "tmax": "30.3",
+    "tmin": "14.6",
+    "desciel": "Poco nuboso",
+    "probprec": "0",
+    "prec": "0.0",
+    "velvien": "5.9",
+    "dirvienc": "Este",
+    "raf": "13.3"
+  }
+]
