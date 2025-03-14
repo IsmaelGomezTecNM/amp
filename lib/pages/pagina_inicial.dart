@@ -1,7 +1,8 @@
+import 'package:amp/custom_widgets/acordeon_dias.dart';
 import 'package:amp/custom_widgets/dia_principal.dart';
-import 'package:amp/custom_widgets/texto_gris_negrita.dart';
+//import 'package:amp/custom_widgets/texto_gris_negrita.dart';
 import 'package:amp/custom_widgets/widget_dia.dart';
-import 'package:amp/models/modelo_dia.dart';
+//import 'package:amp/models/modelo_dia.dart';
 import 'package:amp/models/modelo_municipio.dart';
 import 'package:amp/models/modelo_pronostico.dart';
 import 'package:amp/pages/pagina_busca_municipio.dart';
@@ -22,16 +23,19 @@ class PaginaInicial extends StatefulWidget {
 }
 
 class _PaginaInicialState extends State<PaginaInicial> {
-  String _statusMessage = '';
+  //String _statusMessage = '';
   bool _isGPSEnabled = false;
   String _cityName = "";
   String hoy = DateFormat('dd MMMM', 'es_ES').format(DateTime.now());
   int _diaSeleccionado = 0;
   DateTime horaActual = DateTime.now();
+  String _fechaSeleccionada = "";
 
   @override
   void initState() {
     super.initState();
+
+    _fechaSeleccionada = hoy;
 
     _getLocation();
 
@@ -48,7 +52,7 @@ class _PaginaInicialState extends State<PaginaInicial> {
 
     if (!_isGPSEnabled) {
       setState(() {
-        _statusMessage = "El servicio de ubicación está desactivado";
+        //_statusMessage = "El servicio de ubicación está desactivado";
       });
       return;
     }
@@ -60,11 +64,11 @@ class _PaginaInicialState extends State<PaginaInicial> {
 
       if (permission == LocationPermission.denied) {
         setState(() {
-          _statusMessage = "Permiso negado";
+          //_statusMessage = "Permiso negado";
         });
       } else if (permission == LocationPermission.deniedForever) {
         setState(() {
-          _statusMessage = 'Permiso negado permanentemente';
+          //_statusMessage = 'Permiso negado permanentemente';
         });
       } else {
         _cargaCiudad();
@@ -91,9 +95,10 @@ class _PaginaInicialState extends State<PaginaInicial> {
     }
   }
 
-  void _alSeleccionarDia(int index) {
+  void _alSeleccionarDia(int index, String fecha) {
     if (_diaSeleccionado != index) {
       setState(() {
+        _fechaSeleccionada = fecha;
         _diaSeleccionado = index;
       });
     }
@@ -266,7 +271,8 @@ class _PaginaInicialState extends State<PaginaInicial> {
                               selectedColor: Colors.green,
                               onSelected: (selected) {
                                 if (!provider.estaCargando) {
-                                  _alSeleccionarDia(index);
+                                  _alSeleccionarDia(index,
+                                      provider.pronosticos[index].fecha ?? "");
                                 }
                               },
                               showCheckmark: false,
@@ -276,20 +282,7 @@ class _PaginaInicialState extends State<PaginaInicial> {
                       ),
                     ),
                     SizedBox(height: 8),
-                    Column(
-                      children: List.generate(
-                        23,
-                        (index) => Container(
-                          margin:
-                              EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                          height: 100,
-                          width: double.infinity,
-                          color: Colors.orange[200],
-                          alignment: Alignment.center,
-                          child: Text("Elemento ${index + 1}"),
-                        ),
-                      ),
-                    ),
+                    AcordeonDias(fecha: _fechaSeleccionada),
                   ],
                 ),
               ),
@@ -300,104 +293,3 @@ class _PaginaInicialState extends State<PaginaInicial> {
     );
   }
 }
-
-
-
-          /*
-          Consumer<ProviderPronostico>(
-            builder: (context, provider, child) {
-              if (provider.estaCargando) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-
-              if (provider.pronosticos.isEmpty) {
-                return Center(
-                  child: Text("No hay pronósticos disponibles"),
-                );
-              }
-
-              ModeloPronostico diaPrincipal = provider.pronosticos[0];
-
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    DiaPrincipal(dia: diaPrincipal),
-                    Column(
-                      children: List.generate(
-                        provider.pronosticos.length,
-                        (index) {
-                          ModeloPronostico pronostico =
-                              provider.pronosticos[index];
-                          return WidgetDia();
-                        },
-                      ),
-                    ),
-                    provider.estaCargando
-                        ? CircularProgressIndicator()
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: List.generate(provider.pronosticos.length,
-                                (index) {
-                              ModeloPronostico pronostico =
-                                  provider.pronosticos[index];
-                              return Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: ChoiceChip(
-                                  showCheckmark: false,
-                                  labelStyle: TextStyle(
-                                      color: _diaSeleccionado == index
-                                          ? Colors.white
-                                          : Colors.black),
-                                  label: Text(pronostico.fecha ?? '$index'),
-                                  selected: _diaSeleccionado == index,
-                                  selectedColor: Colors.green,
-                                  onSelected: (selected) {
-                                    if (!provider.estaCargando) {
-                                      _alSeleccionarDia(index);
-                                    }
-                                  },
-                                ),
-                              );
-                            }),
-                          ),
-                  ],
-                ),
-              );
-            },
-          ),
-          Expanded(
-            child: Consumer<ProviderDias>(
-              builder: (context, providerDia, child) {
-                if (providerDia.estaCargando) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-
-                if (providerDia.dia.isEmpty) {
-                  return Center(
-                    child: Text("No hay pronósticos disponibles"),
-                  );
-                }
-
-                return SingleChildScrollView(
-                  child: Column(
-                    children: List.generate(
-                      providerDia.dia.length,
-                      (index) {
-                        ModeloDia pronostico = providerDia.dia[index];
-                        return ListTile(
-                          title: Text(pronostico.temp),
-                          subtitle: Text(pronostico.dh),
-                        );
-                      },
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        */
-        

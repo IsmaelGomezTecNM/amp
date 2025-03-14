@@ -18,7 +18,6 @@ class ModeloDia {
     required this.dh,
     required this.raf,
     required this.numdatos,
-    required this.isExpanded,
   });
 
   String nes;
@@ -40,8 +39,6 @@ class ModeloDia {
   String raf;
   int numdatos;
 
-  bool isExpanded = false;
-
   factory ModeloDia.fromJson(Map<String, dynamic> json) {
     return ModeloDia(
       nes: json["nes"] ?? "",
@@ -62,7 +59,6 @@ class ModeloDia {
       dh: json["dh"] ?? "",
       raf: json["raf"] ?? "",
       numdatos: json["numdatos"] ?? 0,
-      isExpanded: false,
     );
   }
 }
