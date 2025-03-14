@@ -5,7 +5,38 @@ import 'package:flutter/material.dart';
 class DiaPrincipal extends StatelessWidget {
   final ModeloPronostico dia;
 
-  const DiaPrincipal({super.key, required this.dia});
+  Widget separador = Container(
+    padding: EdgeInsets.symmetric(horizontal: 16),
+    decoration: BoxDecoration(
+      border: Border(
+        right: BorderSide(
+          color: Colors.black,
+          width: 2,
+        ),
+      ),
+    ),
+    child: SizedBox(
+      width: 40.0,
+      height: 40.0,
+    ),
+  );
+
+  DiaPrincipal({super.key, required this.dia});
+
+  Widget Elemento(String texto, IconData icono, String medida) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(texto),
+        Row(
+          children: [
+            Icon(icono),
+            Text(medida),
+          ],
+        )
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,25 +70,73 @@ class DiaPrincipal extends StatelessWidget {
             ],
           ),
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 40),
-          child: Column(
-            children: [
-              TextoGrisNegrita(
-                  texto: "Precipitación: ", medida: "${dia.prec} litros/m²"),
-              TextoGrisNegrita(
-                  texto: "Probabilidad de lluvia: ",
-                  medida: "${dia.probprec} %"),
-              TextoGrisNegrita(
-                  texto: "Velocidad del viento: ",
-                  medida: "${dia.velvien} km/h"),
-              TextoGrisNegrita(
-                  texto: "Dirección del viento: ", medida: dia.dirvienc),
-              TextoGrisNegrita(
-                  texto: "Ráfaga de viento: ", medida: "${dia.velvien} km/h"),
-            ],
-          ),
-        )
+        MediaQuery.of(context).size.width <= 600
+            ? Padding(
+                padding: EdgeInsets.symmetric(horizontal: 40),
+                child: Column(
+                  children: [
+                    TextoGrisNegrita(
+                        texto: "Precipitación: ",
+                        medida: "${dia.prec} litros/m²"),
+                    TextoGrisNegrita(
+                        texto: "Probabilidad de lluvia: ",
+                        medida: "${dia.probprec} %"),
+                    TextoGrisNegrita(
+                        texto: "Velocidad del viento: ",
+                        medida: "${dia.velvien} km/h"),
+                    TextoGrisNegrita(
+                        texto: "Dirección del viento: ", medida: dia.dirvienc),
+                    TextoGrisNegrita(
+                        texto: "Ráfaga de viento: ",
+                        medida: "${dia.velvien} km/h"),
+                  ],
+                ),
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Elemento("Lluvia", Icons.snooze, "${dia.prec} litros/m²"),
+                  separador,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Probabilidad de lluvia'),
+                      Row(
+                        children: [
+                          Icon(Icons.cloudy_snowing),
+                          Text("${dia.prec} litros/m²"),
+                        ],
+                      )
+                    ],
+                  ),
+                  separador,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Dirección del viento'),
+                      Row(
+                        children: [
+                          Icon(Icons.cloudy_snowing),
+                          Text("${dia.prec} litros/m²"),
+                        ],
+                      )
+                    ],
+                  ),
+                  separador,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Velocidad del viento'),
+                      Row(
+                        children: [
+                          Icon(Icons.cloudy_snowing),
+                          Text("${dia.prec} litros/m²"),
+                        ],
+                      )
+                    ],
+                  )
+                ],
+              )
       ],
     );
   }
